@@ -15,8 +15,8 @@ on:
   #  branches: 
   #    - master
 
-  #schedule:
-  #  - cron: 0 8 * * 5
+  schedule:
+    - cron: 0 2 * * 1
   
   #watch:
   #  types: [started]
@@ -101,3 +101,13 @@ jobs:
       with:
         name: OpenWrt
         path: openwrt/bin
+
+    - name: Notify To Telegram
+      if: env.TG_USER_ID && env.TG_BOT_TOKEN
+      run: |
+        curl \
+          -s -o /dev/null \
+          -X POST \
+          -H "Content-Type: application/json" \
+          -d '{"text": "${{github.workflow}} 完成！","chat_id": "${{ env.TG_USER_ID }}"}' \
+          https://api.telegram.org/bot${{ env.TG_BOT_TOKEN }}/sendMessage
