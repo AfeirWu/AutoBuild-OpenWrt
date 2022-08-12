@@ -25,6 +25,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      TG_USER_ID: ${{ secrets.TG_USER_ID }}
+      TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
 
     steps:
     - name: Checkout
